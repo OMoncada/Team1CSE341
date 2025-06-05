@@ -1,0 +1,81 @@
+################## 📒 RECIPES ROUTES #######################
+
+#### Get all recipes
+GET http://localhost:3000/recipes
+
+#### Get one recipe by ID
+GET http://localhost:3000/recipes/68410a64341d7f693ce9c4cf
+
+#### Create new recipe
+POST http://localhost:3000/recipes
+Content-Type: application/json
+
+{
+  "name": "Oatmeal Pancakes",
+  "ingredients": ["oats", "egg", "ripe banana", "milk", "cinnamon"],
+  "instructions": "Blend all ingredients. Cook on a nonstick pan on both sides until golden. Serve with fruit or honey.",
+  "category": "Breakfast",
+  "prepTime": 5,
+  "cookTime": 10,
+  "imageUrl": "https://cookieandkate.com/images/2021/04/blender-pancakes-recipe-1.jpg"
+}
+
+
+#### Update recipe by ID
+PUT http://localhost:3000/recipes/68410cdf341d7f693ce9c4da
+Content-Type: application/json
+
+{
+  "name": "Oatmeal Pancakes",
+  "ingredients": ["oats", "egg", "ripe banana", "milk", "cinnamon"],
+  "instructions": "Blend all ingredients. Cook on a nonstick pan on both sides until golden. Serve with fruit or honey.",
+  "category": "Breakfast",
+  "prepTime": 5,
+  "cookTime": 10,
+  "imageUrl": "https://cookieandkate.com/images/2021/04/blender-pancakes-recipe-1.jpg"
+}
+
+#### Delete recipe by ID
+DELETE http://localhost:3000/recipes/68410cdf341d7f693ce9c4da
+
+
+
+
+################## 👤 USERS ROUTES  ###########################
+
+### Get all users
+GET http://localhost:3000/users
+
+### Get one user by ID
+GET http://localhost:3000/users/684115626919c8aa4ada910c
+
+### Create new user
+POST http://localhost:3000/users
+Content-Type: application/json
+
+
+{
+  "username": "johndoe",
+  "email": "johndoe@example.com",
+  "password": "securePass123",
+  "favorites": [],
+  "role": "user",
+  "bio": "Loves quick and healthy meals."
+}
+
+### Update user by ID
+PUT http://localhost:3000/users/6841157d6919c8aa4ada910e
+Content-Type: application/json
+
+{
+    "_id": "6841157d6919c8aa4ada910e",
+    "username": "chefmax",
+    "email": "max@example.com",
+    "password": "maxMasterChef",
+    "favorites": ["68410c6a341d7f693ce9c4d6"],
+    "role": "user",
+    "bio": "Professional chef with experience in gourmet dishes."
+  }
+
+### Delete user by ID
+DELETE http://localhost:3000/users/

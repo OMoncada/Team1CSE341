@@ -1,0 +1,139 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Project5",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/recipes": {
+      "get": {
+        "summary": "Obtener todas las recetas",
+        "responses": {
+          "200": {
+            "description": "Lista de recetas"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear una nueva receta",
+        "responses": {
+          "201": {
+            "description": "Receta creada"
+          },
+          "422": {
+            "description": "Error de validación"
+          }
+        }
+      }
+    },
+    "/recipes/{id}": {
+      "get": {
+        "summary": "Obtener una receta por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Receta encontrada" },
+          "404": { "description": "No encontrada" }
+        }
+      },
+      "put": {
+        "summary": "Actualizar receta",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Receta actualizada" },
+          "422": { "description": "Error de validación" }
+        }
+      },
+      "delete": {
+        "summary": "Eliminar receta",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Receta eliminada" },
+          "404": { "description": "No encontrada" }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Obtener todos los usuarios",
+        "responses": {
+          "200": { "description": "Lista de usuarios" }
+        }
+      },
+      "post": {
+        "summary": "Crear un nuevo usuario",
+        "responses": {
+          "201": { "description": "Usuario creado" },
+          "422": { "description": "Error de validación" }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Obtener un usuario por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Usuario encontrado" },
+          "404": { "description": "No encontrado" }
+        }
+      },
+      "put": {
+        "summary": "Actualizar usuario",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Usuario actualizado" },
+          "422": { "description": "Error de validación" }
+        }
+      },
+      "delete": {
+        "summary": "Eliminar usuario",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Usuario eliminado" },
+          "404": { "description": "No encontrado" }
+        }
+      }
+    }
+  }
+}
