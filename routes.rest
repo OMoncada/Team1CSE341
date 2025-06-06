@@ -22,17 +22,22 @@ Content-Type: application/json
 
 
 #### Update recipe by ID
-PUT http://localhost:3000/recipes/68410cdf341d7f693ce9c4da
+PUT http://localhost:3000/recipes/684114556919c8aa4ada910a
 Content-Type: application/json
 
 {
   "name": "Oatmeal Pancakes",
-  "ingredients": ["oats", "egg", "ripe banana", "milk", "cinnamon"],
-  "instructions": "Blend all ingredients. Cook on a nonstick pan on both sides until golden. Serve with fruit or honey.",
-  "category": "Breakfast",
-  "prepTime": 5,
-  "cookTime": 10,
-  "imageUrl": "https://cookieandkate.com/images/2021/04/blender-pancakes-recipe-1.jpg"
+    "ingredients": [
+      "oats",
+      "ripe banana",
+      "milk",
+      "cinnamon"
+    ],
+    "instructions": "Blend all ingredients. Cook on a nonstick pan on both sides until golden. Serve with fruit or honey.",
+    "category": "Breakfast",
+    "prepTime": 5,
+    "cookTime": 10,
+    "imageUrl": "https://cookieandkate.com/images/2021/04/blender-pancakes-recipe-1.jpg"
 }
 
 #### Delete recipe by ID
@@ -64,17 +69,17 @@ Content-Type: application/json
 }
 
 ### Update user by ID
-PUT http://localhost:3000/users/6841157d6919c8aa4ada910e
+PUT http://localhost:3000/users/6841158d6919c8aa4ada9110
 Content-Type: application/json
 
 {
-    "_id": "6841157d6919c8aa4ada910e",
-    "username": "chefmax",
-    "email": "max@example.com",
-    "password": "maxMasterChef",
-    "favorites": ["68410c6a341d7f693ce9c4d6"],
+    "_id": "6841158d6919c8aa4ada9110",
+    "username": "greenveggie",
+    "email": "veggie@example.com",
+    "password": "plantBasedLife",
+    "favorites": ["684114556919c8aa4ada910a"],
     "role": "user",
-    "bio": "Professional chef with experience in gourmet dishes."
+    "bio": "Nutritionist focused on plant-based meals."
   }
 
 ### Delete user by ID
