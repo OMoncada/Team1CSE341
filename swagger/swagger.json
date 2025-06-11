@@ -5,29 +5,22 @@
     "version": "1.0.0"
   },
   "tags": [
-    {
-      "name": "Recipes",
-      "description": "Endpoints to manage recipes"
-    },
-    {
-      "name": "Users",
-      "description": "Endpoints to manage users"
-    }
+    { "name": "Recipes", "description": "Endpoints to manage recipes" },
+    { "name": "Users", "description": "Endpoints to manage users" },
+    { "name": "Categories", "description": "Endpoints to manage recipe categories" },
+    { "name": "Reviews", "description": "Endpoints to manage recipe reviews" }
   ],
   "paths": {
     "/recipes": {
       "get": {
         "tags": ["Recipes"],
-        "summary": "Obtener todas las recetas",
-        "responses": {
-          "200": {
-            "description": "Lista de recetas"
-          }
-        }
+        "summary": "Get all recipes",
+        "responses": { "200": { "description": "List of recipes" } },
+        "security": [{ "OAuth2": [] }]
       },
       "post": {
         "tags": ["Recipes"],
-        "summary": "Crear una nueva receta",
+        "summary": "Create a new recipe",
         "requestBody": {
           "required": true,
           "content": {
@@ -35,67 +28,45 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": { "type": "string" },
+                  "title": { "type": "string" },
                   "ingredients": { "type": "array", "items": { "type": "string" } },
                   "instructions": { "type": "string" },
                   "category": { "type": "string" },
+                  "authorId": { "type": "string" },
+                  "imageUrl": { "type": "string" },
                   "prepTime": { "type": "number" },
                   "cookTime": { "type": "number" },
-                  "imageUrl": { "type": "string" }
+                  "servings": { "type": "number" }
                 },
-                "required": ["name", "ingredients", "instructions"]
+                "required": ["title", "ingredients", "instructions", "authorId"]
               }
             }
           }
         },
         "responses": {
-          "201": { "description": "Receta creada" },
-          "422": { "description": "Error de validación" }
-        }
+          "201": { "description": "Recipe created" },
+          "422": { "description": "Validation error" }
+        },
+        "security": [{ "OAuth2": [] }]
       }
     },
     "/recipes/{id}": {
       "get": {
         "tags": ["Recipes"],
-        "summary": "Obtener una receta por ID",
+        "summary": "Get a recipe by ID",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
-          "200": {
-            "description": "Receta encontrada",
-            "content": {
-              "application/json": {
-                "example": {
-                  "name": "Spaghetti Bolognese",
-                  "ingredients": ["spaghetti", "ground beef", "tomato sauce", "garlic"],
-                  "instructions": "Cook pasta and add sauce.",
-                  "category": "Pasta",
-                  "prepTime": 15,
-                  "cookTime": 30,
-                  "imageUrl": "https://example.com/spaghetti.jpg"
-                }
-              }
-            }
-          },
-          "404": { "description": "No encontrada" }
+          "200": { "description": "Recipe found" },
+          "404": { "description": "Not found" }
         }
       },
       "put": {
         "tags": ["Recipes"],
-        "summary": "Actualizar receta",
+        "summary": "Update a recipe",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "requestBody": {
           "required": true,
@@ -104,52 +75,49 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": { "type": "string" },
+                  "title": { "type": "string" },
                   "ingredients": { "type": "array", "items": { "type": "string" } },
                   "instructions": { "type": "string" },
                   "category": { "type": "string" },
+                  "authorId": { "type": "string" },
+                  "imageUrl": { "type": "string" },
                   "prepTime": { "type": "number" },
                   "cookTime": { "type": "number" },
-                  "imageUrl": { "type": "string" }
-                },
-                "required": ["name", "ingredients", "instructions"]
+                  "servings": { "type": "number" }
+                }
               }
             }
           }
         },
         "responses": {
-          "200": { "description": "Receta actualizada" },
-          "422": { "description": "Error de validación" }
-        }
+          "200": { "description": "Recipe updated" },
+          "422": { "description": "Validation error" }
+        },
+        "security": [{ "OAuth2": [] }]
       },
       "delete": {
         "tags": ["Recipes"],
-        "summary": "Eliminar receta",
+        "summary": "Delete a recipe",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
-          "200": { "description": "Receta eliminada" },
-          "404": { "description": "No encontrada" }
+          "200": { "description": "Recipe deleted" },
+          "404": { "description": "Not found" }
         }
       }
     },
     "/users": {
       "get": {
         "tags": ["Users"],
-        "summary": "Obtener todos los usuarios",
+        "summary": "Get all users",
         "responses": {
-          "200": { "description": "Lista de usuarios" }
+          "200": { "description": "List of users" }
         }
       },
       "post": {
         "tags": ["Users"],
-        "summary": "Crear un nuevo usuario",
+        "summary": "Create a new user",
         "requestBody": {
           "required": true,
           "content": {
@@ -157,68 +125,39 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "username": { "type": "string" },
+                  "name": { "type": "string" },
                   "email": { "type": "string" },
-                  "password": { "type": "string" },
-                  "favorites": {
-                    "type": "array",
-                    "items": { "type": "string" }
-                  },
-                  "role": { "type": "string" },
-                  "bio": { "type": "string" }
+                  "password": { "type": "string" }
                 },
-                "required": ["username", "email"]
+                "required": ["name", "email", "password"]
               }
             }
           }
         },
         "responses": {
-          "201": { "description": "Usuario creado" },
-          "422": { "description": "Error de validación" }
-        }
+          "201": { "description": "User created" },
+          "422": { "description": "Validation error" }
+        },
+        "security": [{ "OAuth2": [] }]
       }
     },
     "/users/{id}": {
       "get": {
         "tags": ["Users"],
-        "summary": "Obtener un usuario por ID",
+        "summary": "Get a user by ID",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
-          "200": {
-            "description": "Usuario encontrado",
-            "content": {
-              "application/json": {
-                "example": {
-                  "username": "oscarm",
-                  "email": "oscar@example.com",
-                  "password": "claveSegura123",
-                  "favorites": [],
-                  "role": "admin",
-                  "bio": "I love cooking and sharing recipes"
-                }
-              }
-            }
-          },
-          "404": { "description": "No encontrado" }
+          "200": { "description": "User found" },
+          "404": { "description": "Not found" }
         }
       },
       "put": {
         "tags": ["Users"],
-        "summary": "Actualizar usuario",
+        "summary": "Update a user",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "requestBody": {
           "required": true,
@@ -227,40 +166,164 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "username": { "type": "string" },
-                  "email": { "type": "string" },
-                  "password": { "type": "string" },
-                  "favorites": {
-                    "type": "array",
-                    "items": { "type": "string" }
-                  },
-                  "role": { "type": "string" },
-                  "bio": { "type": "string" }
-                },
-                "required": ["username", "email"]
+                  "name": { "type": "string" },
+                  "email": { "type": "string" }
+                }
               }
             }
           }
         },
         "responses": {
-          "200": { "description": "Usuario actualizado" },
-          "422": { "description": "Error de validación" }
-        }
+          "200": { "description": "User updated" },
+          "404": { "description": "Not found" }
+        },
+        "security": [{ "OAuth2": [] }]
       },
       "delete": {
         "tags": ["Users"],
-        "summary": "Eliminar usuario",
+        "summary": "Delete a user",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "string" }
-          }
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
         ],
         "responses": {
-          "200": { "description": "Usuario eliminado" },
-          "404": { "description": "No encontrado" }
+          "200": { "description": "User deleted" },
+          "404": { "description": "Not found" }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get all categories",
+        "responses": { "200": { "description": "List of categories" } }
+      },
+      "post": {
+        "tags": ["Categories"],
+        "summary": "Create a category",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "description": { "type": "string" }
+                },
+                "required": ["name"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Category created" },
+          "422": { "description": "Validation error" }
+        },
+        "security": [{ "OAuth2": [] }]
+      }
+    },
+    "/categories/{id}": {
+      "delete": {
+        "tags": ["Categories"],
+        "summary": "Delete a category",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Category deleted" },
+          "404": { "description": "Not found" }
+        }
+      }
+    },
+    "/recipes/{id}/reviews": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "Get all reviews of a recipe",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "List of reviews" } }
+      },
+      "post": {
+        "tags": ["Reviews"],
+        "summary": "Add a review to a recipe",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": { "type": "string" },
+                  "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
+                  "comment": { "type": "string" }
+                },
+                "required": ["userId", "rating", "comment"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Review created" },
+          "422": { "description": "Validation error" }
+        },
+        "security": [{ "OAuth2": [] }]
+      }
+    },
+    "/reviews/{reviewId}": {
+      "put": {
+        "tags": ["Reviews"],
+        "summary": "Update a review",
+        "parameters": [
+          { "name": "reviewId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
+                  "comment": { "type": "string" }
+                },
+                "required": ["rating", "comment"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Review updated" },
+          "404": { "description": "Not found" }
+        },
+        "security": [{ "OAuth2": [] }]
+      },
+      "delete": {
+        "tags": ["Reviews"],
+        "summary": "Delete a review",
+        "parameters": [
+          { "name": "reviewId", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Review deleted" },
+          "404": { "description": "Not found" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://github.com/login/oauth/authorize",
+            "tokenUrl": "https://github.com/login/oauth/access_token",
+            "scopes": {}
+          }
         }
       }
     }

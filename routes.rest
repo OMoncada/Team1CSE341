@@ -4,49 +4,44 @@
 GET http://localhost:3000/recipes
 
 #### Get one recipe by ID
-GET http://localhost:3000/recipes/68410a64341d7f693ce9c4cf
+GET http://localhost:3000/recipes/
 
 #### Create new recipe
 POST http://localhost:3000/recipes
 Content-Type: application/json
 
 {
-  "name": "Oatmeal Pancakes",
-  "ingredients": ["oats", "egg", "ripe banana", "milk", "cinnamon"],
-  "instructions": "Blend all ingredients. Cook on a nonstick pan on both sides until golden. Serve with fruit or honey.",
-  "category": "Breakfast",
-  "prepTime": 5,
-  "cookTime": 10,
-  "imageUrl": "https://cookieandkate.com/images/2021/04/blender-pancakes-recipe-1.jpg"
+  "title": "Greek Salad",
+  "ingredients": ["cucumber", "tomato", "feta cheese", "olives", "olive oil", "oregano"],
+  "instructions": "Chop all ingredients, mix in a bowl, and drizzle with olive oil and oregano.",
+  "category": "Salad",
+  "authorId": "1234567890abcdef12345678",
+  "imageUrl": "https://example.com/images/greeksalad.jpg",
+  "prepTime": 10,
+  "cookTime": 0,
+  "servings": 3
 }
 
-
 #### Update recipe by ID
-PUT http://localhost:3000/recipes/684114556919c8aa4ada910a
+PUT http://localhost:3000/recipes/68410c34341d7f693ce9c4d4
 Content-Type: application/json
 
 {
-  "name": "Oatmeal Pancakes",
-    "ingredients": [
-      "oats",
-      "ripe banana",
-      "milk",
-      "cinnamon"
-    ],
-    "instructions": "Blend all ingredients. Cook on a nonstick pan on both sides until golden. Serve with fruit or honey.",
-    "category": "Breakfast",
-    "prepTime": 5,
-    "cookTime": 10,
-    "imageUrl": "https://cookieandkate.com/images/2021/04/blender-pancakes-recipe-1.jpg"
+  "title": "Caesar Salad",
+  "ingredients": ["romaine lettuce", "grilled chicken", "parmesan cheese", "croutons", "Caesar dressing"],
+  "instructions": "Wash and chop lettuce. Add ingredients and toss.",
+  "category": "Salad",
+  "authorId": "123456789012345678901234",
+  "imageUrl": "https://www.gourmet.cl/wp-content/uploads/2016/09/EnsaladaCesar2.webp",
+  "prepTime": 20,
+  "cookTime": 0,
+  "servings": 4
 }
 
 #### Delete recipe by ID
-DELETE http://localhost:3000/recipes/68410cdf341d7f693ce9c4da
+DELETE http://localhost:3000/recipes/684279c49c6dc96c07e90fd6
 
-
-
-
-################## 👤 USERS ROUTES  ###########################
+################## 👤 USERS ROUTES ###########################
 
 ### Get all users
 GET http://localhost:3000/users
@@ -57,7 +52,6 @@ GET http://localhost:3000/users/684115626919c8aa4ada910c
 ### Create new user
 POST http://localhost:3000/users
 Content-Type: application/json
-
 
 {
   "username": "johndoe",
@@ -73,14 +67,57 @@ PUT http://localhost:3000/users/6841158d6919c8aa4ada9110
 Content-Type: application/json
 
 {
-    "_id": "6841158d6919c8aa4ada9110",
-    "username": "greenveggie",
-    "email": "veggie@example.com",
-    "password": "plantBasedLife",
-    "favorites": ["684114556919c8aa4ada910a"],
-    "role": "user",
-    "bio": "Nutritionist focused on plant-based meals."
-  }
+  "username": "greenveggie",
+  "email": "veggie@example.com",
+  "password": "plantBasedLife",
+  "favorites": ["684114556919c8aa4ada910a"],
+  "role": "user",
+  "bio": "Nutritionist focused on plant-based meals."
+}
 
 ### Delete user by ID
-DELETE http://localhost:3000/users/
+DELETE http://localhost:3000/users/6841158d6919c8aa4ada9110
+
+################## 🗂️ CATEGORIES ROUTES ###########################
+
+### Get all categories
+GET http://localhost:3000/categories
+
+### Create a category
+POST http://localhost:3000/categories
+Content-Type: application/json
+
+{
+  "name": "Appetizer",
+  "description": "Light dishes served before the main meal"
+}
+
+### Delete a category by ID
+DELETE http://localhost:3000/categories/684118df6919c8aa4ada9113
+
+################## 💬 COMMENTS ROUTES ###########################
+
+### Get comments for a specific recipe
+GET http://localhost:3000/recipes/68410a64341d7f693ce9c4cf/comments
+
+### Add a comment to a recipe
+POST http://localhost:3000/recipes/68410a64341d7f693ce9c4cf/comments
+Content-Type: application/json
+
+{
+  "authorId": "123456789012345678901234",
+  "text": "Delicious and very easy to make!",
+  "rating": 5
+}
+
+### Update a comment
+PUT http://localhost:3000/comments/684119146919c8aa4ada9114
+Content-Type: application/json
+
+{
+  "text": "Actually, I added strawberries and it was amazing!",
+  "rating": 4
+}
+
+### Delete a comment
+DELETE http://localhost:3000/comments/684119146919c8aa4ada9114
