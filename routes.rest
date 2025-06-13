@@ -83,41 +83,56 @@ DELETE http://localhost:3000/users/6841158d6919c8aa4ada9110
 ### Get all categories
 GET http://localhost:3000/categories
 
+### ✅ Get a category by ID
+GET http://localhost:3000/categories/
+
 ### Create a category
 POST http://localhost:3000/categories
 Content-Type: application/json
 
 {
-  "name": "Appetizer",
-  "description": "Light dishes served before the main meal"
+  "name": "Drinks",
+  "description": "Juices, smoothies, and cocktails"
+}
+
+### Update a category by ID
+PUT http://localhost:3000/categories/684118df6919c8aa4ada9113
+Content-Type: application/json
+
+{
+  "name": "Updated Drinks",
+  "description": "Fresh juices and cold drinks"
 }
 
 ### Delete a category by ID
 DELETE http://localhost:3000/categories/684118df6919c8aa4ada9113
 
-################## 💬 COMMENTS ROUTES ###########################
+################## 💬 REVIEWS ROUTES ###########################
 
-### Get comments for a specific recipe
-GET http://localhost:3000/recipes/68410a64341d7f693ce9c4cf/comments
+### ✅ Get all reviews
+GET http://localhost:3000/reviews
 
-### Add a comment to a recipe
-POST http://localhost:3000/recipes/68410a64341d7f693ce9c4cf/comments
+### ✅ Get reviews for a specific recipe
+GET http://localhost:3000/reviews/recipe/6847bc70174de04e52cb3864/reviews
+
+### ✅ Add a review to a recipe
+POST http://localhost:3000/reviews/recipe/6847bcbc174de04e52cb3869/reviews
 Content-Type: application/json
 
 {
-  "authorId": "123456789012345678901234",
-  "text": "Delicious and very easy to make!",
-  "rating": 5
+  "userId": "6841158d6919c8aa4ada9110",
+  "rating": 3,
+  "comment": "Excellent, too good."
 }
 
-### Update a comment
-PUT http://localhost:3000/comments/684119146919c8aa4ada9114
+### ✅ Update a review by ID
+PUT http://localhost:3000/reviews/684baf437865d8de7ebefd87
 Content-Type: application/json
 
 {
-  "text": "Actually, I added strawberries and it was amazing!",
-  "rating": 4
+  "rating": 2,
+  "comment": "Excellent, too good..."
 }
 
-### Delete a comment
-DELETE http://localhost:3000/comments/684119146919c8aa4ada9114
+### ✅ Delete a review by ID
+DELETE http://localhost:3000/reviews/684ba5717865d8de7ebefd71

@@ -1,15 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const categoryController = require('../controllers/categories');
-const { validateCategory } = require('../validators/categoryValidator');
+const isAuthenticated = require('../middleware/isAuthenticated');
+const { validateCategory, validateCategoryUpdate } = require('../validators/categoryValidator');
 
 // Obtener todas las categorías
 router.get('/', categoryController.getAllCategories);
 
-// Crear una nueva categoría
-router.post('/', validateCategory, categoryController.createCategory);
+// Obtener una categoría por ID
+router.get('/:id', categoryController.getCategoryById);
 
-// Eliminar una categoría por ID
-router.delete('/:id', categoryController.deleteCategory);
+// Crear una nueva categoría (protegido)
+router.post('/', isAuthenticated, validateCategory, categoryController.createCategory);
+
+// Actualizar una categoría (protegido)
+router.put('/:id', isAuthenticated, validateCategoryUpdate, categoryController.updateCategory);
+
+// Eliminar una categoría (protegido)
+router.delete('/:id', isAuthenticated, categoryController.deleteCategory);
 
 module.exports = router;

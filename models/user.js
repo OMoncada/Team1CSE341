@@ -10,4 +10,11 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
+userSchema.set('toJSON', {
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret.__v;
+  }
+});
+
 module.exports = mongoose.model('User', userSchema);

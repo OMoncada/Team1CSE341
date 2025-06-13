@@ -13,4 +13,11 @@ const recipeSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
+recipeSchema.set('toJSON', {
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret.__v;
+  }
+});
+
 module.exports = mongoose.model('Recipe', recipeSchema);

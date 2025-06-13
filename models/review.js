@@ -27,4 +27,11 @@ const reviewSchema = new mongoose.Schema({
   }
 });
 
+reviewSchema.set('toJSON', {
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret.__v;
+  }
+});
+
 module.exports = mongoose.model('Review', reviewSchema);

@@ -1,24 +1,37 @@
 const Review = require('../models/review');
 
-// GET /recipes/:id/reviews
-exports.getReviewsByRecipe = async (req, res, next) => {
+// ✅ GET /reviews - Obtener todas las reseñas
+exports.getAllReviews = async (req, res, next) => {
   try {
-    const reviews = await Review.find({ recipeId: req.params.id });
-    res.json(reviews);
+    const reviews = await Review.find()
+      .populate('recipeId', 'title')   // Puedes ajustar qué campos incluir
+      .populate('userId', 'name email');
+    res.status(200).json(reviews);
   } catch (err) {
     next(err);
   }
 };
 
-// POST /recipes/:id/reviews
+// ✅ GET /reviews/recipe/:recipeId - Obtener reseñas de una receta específica
+exports.getReviewsByRecipe = async (req, res, next) => {
+  try {
+    const reviews = await Review.find({ recipeId: req.params.recipeId })
+      .populate('userId', 'name email');
+    res.status(200).json(reviews);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ✅ POST /reviews/recipe/:recipeId - Agregar una reseña a una receta
 exports.addReview = async (req, res, next) => {
   try {
-    const { reviewer, rating, comment } = req.body;
+    const { userId, rating, comment } = req.body;
     const review = new Review({
-      recipeId: req.params.id,
-      reviewer,
+      recipeId: req.params.recipeId,
+      userId,
       rating,
-      comment,
+      comment
     });
     await review.save();
     res.status(201).json(review);
@@ -27,7 +40,7 @@ exports.addReview = async (req, res, next) => {
   }
 };
 
-// PUT /reviews/:reviewId
+// ✅ PUT /reviews/:reviewId - Actualizar una reseña
 exports.updateReview = async (req, res, next) => {
   try {
     const updatedReview = await Review.findByIdAndUpdate(
@@ -38,20 +51,20 @@ exports.updateReview = async (req, res, next) => {
     if (!updatedReview) {
       return res.status(404).json({ message: 'Review not found' });
     }
-    res.json(updatedReview);
+    res.status(200).json(updatedReview);
   } catch (err) {
     next(err);
   }
 };
 
-// DELETE /reviews/:reviewId
+// ✅ DELETE /reviews/:reviewId - Eliminar una reseña
 exports.deleteReview = async (req, res, next) => {
   try {
     const result = await Review.findByIdAndDelete(req.params.reviewId);
     if (!result) {
       return res.status(404).json({ message: 'Review not found' });
     }
-    res.json({ message: 'Review deleted' });
+    res.status(200).json({ message: 'Review deleted successfully' });
   } catch (err) {
     next(err);
   }

@@ -8,7 +8,7 @@ const GitHubStrategy = require('passport-github2').Strategy;
 const swagger = require('./swagger');
 const api404Error = require('./middleware/api404Error');
 
-dotenv.config(); // 👈 Asegúrate de que esté antes de usar variables de entorno
+dotenv.config(); // Cargar variables de entorno
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -28,13 +28,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// 👉 Configurar estrategia GitHub OAuth
+// 👉 Configurar estrategia OAuth con GitHub
 passport.serializeUser((user, done) => {
   done(null, user);
 });
 passport.deserializeUser((obj, done) => {
   done(null, obj);
 });
+
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
@@ -43,35 +44,54 @@ passport.use(new GitHubStrategy({
   return done(null, profile);
 }));
 
+// 👉 Ruta /login para iniciar sesión con GitHub
+app.get('/login', (req, res) => {
+  res.redirect('/auth/github');
+});
+
+// 👉 Ruta /logout para cerrar sesión
+app.get('/logout', (req, res, next) => {
+  req.logout(function(err) {
+    if (err) return next(err);
+    req.session.destroy(() => {
+      res.send('👋 Sesión cerrada correctamente.');
+    });
+  });
+});
+
 // 👉 Rutas de autenticación
 app.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ] }));
 
 app.get('/callback', passport.authenticate('github', {
   failureRedirect: '/auth/failure'
 }), (req, res) => {
-  res.send('✅ Auth successful. You can now access protected routes.');
+  res.send('✅ Autenticación exitosa. Ahora puedes usar rutas protegidas.');
 });
 
 app.get('/auth/failure', (req, res) => {
-  res.status(401).send('❌ Authentication Failed');
+  res.status(401).send('❌ Falló la autenticación');
 });
 
 // 👉 Ruta raíz
 app.get('/', (req, res) => {
-  res.send('👨‍🍳 Bienvenidos al proyecto final The Food Table 🍽️ ');
+  res.send('👨‍🍳 Bienvenidos al proyecto final The Food Table 🍽️');
 });
 
 // 👉 Documentación Swagger
 swagger(app);
 
 // 👉 Rutas API
-app.use('/recipes', require('./routes/recipe'));
+app.use('/recipes', require('./routes/recipe'));       // rutas de recetas
+app.use('/recipes', require('./routes/review'));       // solo para GET/POST de reviews
+app.use('/reviews', require('./routes/review'));       // solo para PUT/DELETE de reviews
 app.use('/users', require('./routes/user'));
+app.use('/categories', require('./routes/category'));
+
 
 // 👉 Manejo de rutas no encontradas
 app.use(api404Error);
 
-// 👉 Conexión a la base de datos
+// 👉 Conexión a MongoDB
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('✅ Conectado a MongoDB');
