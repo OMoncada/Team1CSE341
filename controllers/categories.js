@@ -10,7 +10,7 @@ exports.getAllCategories = async (req, res, next) => {
   }
 };
 
-// GET /categories/:id
+// ✅ GET /categories/:id - Obtener una categoría por ID
 exports.getCategoryById = async (req, res, next) => {
   try {
     const category = await Category.findById(req.params.id);
@@ -23,12 +23,11 @@ exports.getCategoryById = async (req, res, next) => {
   }
 };
 
-
 // ✅ POST /categories - Crear una nueva categoría
 exports.createCategory = async (req, res, next) => {
   try {
-    const { name } = req.body;
-    const category = new Category({ name });
+    const { name, description } = req.body;
+    const category = new Category({ name, description });
     await category.save();
     res.status(201).json(category);
   } catch (err) {
@@ -39,12 +38,12 @@ exports.createCategory = async (req, res, next) => {
 // ✅ PUT /categories/:id - Actualizar una categoría existente
 exports.updateCategory = async (req, res, next) => {
   try {
-    const { name } = req.body;
+    const { name, description } = req.body;
     const categoryId = req.params.id;
 
     const updatedCategory = await Category.findByIdAndUpdate(
       categoryId,
-      { name },
+      { name, description },
       { new: true }
     );
 
