@@ -292,119 +292,119 @@
     "security": [{ "OAuth2": [] }]
   }
 },
-"/reviews": {
-  "get": {
-    "tags": ["Reviews"],
-    "summary": "Get all reviews",
-    "responses": {
-      "200": { "description": "List of all reviews" },
-      "500": { "description": "Server error" }
-    }
-  }
-},
-"/recipes/{recipeId}/reviews": {
-  "get": {
-    "tags": ["Reviews"],
-    "summary": "Get all reviews for a specific recipe",
-    "parameters": [
-      {
-        "name": "recipeId",
-        "in": "path",
-        "required": true,
-        "schema": { "type": "string" }
+  "/reviews": {
+    "get": {
+      "tags": ["Reviews"],
+      "summary": "Get all reviews",
+      "responses": {
+        "200": { "description": "List of all reviews" },
+        "500": { "description": "Server error" }
       }
-    ],
-    "responses": {
-      "200": { "description": "List of reviews for the recipe" },
-      "404": { "description": "Recipe not found" }
     }
   },
-  "post": {
-    "tags": ["Reviews"],
-    "summary": "Add a review to a recipe",
-    "parameters": [
-      {
-        "name": "recipeId",
-        "in": "path",
-        "required": true,
-        "schema": { "type": "string" }
+  "/reviews/recipe/{recipeId}": {
+    "get": {
+      "tags": ["Reviews"],
+      "summary": "Get all reviews for a specific recipe",
+      "parameters": [
+        {
+          "name": "recipeId",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "string" }
+        }
+      ],
+      "responses": {
+        "200": { "description": "List of reviews for the recipe" },
+        "404": { "description": "Recipe not found" }
       }
-    ],
-    "requestBody": {
-      "required": true,
-      "content": {
-        "application/json": {
-          "schema": {
-            "type": "object",
-            "properties": {
-              "userId": { "type": "string" },
-              "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
-              "comment": { "type": "string" }
-            },
-            "required": ["userId", "rating", "comment"]
+    },
+    "post": {
+      "tags": ["Reviews"],
+      "summary": "Add a review to a recipe",
+      "parameters": [
+        {
+          "name": "recipeId",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "string" }
+        }
+      ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": { "type": "string" },
+                "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
+                "comment": { "type": "string" }
+              },
+              "required": ["userId", "rating", "comment"]
+            }
           }
         }
-      }
-    },
-    "responses": {
-      "201": { "description": "Review created" },
-      "422": { "description": "Validation error" },
-      "404": { "description": "Recipe not found" }
-    },
-    "security": [{ "OAuth2": [] }]
-  }
-},
-"/reviews/{reviewId}": {
-  "put": {
-    "tags": ["Reviews"],
-    "summary": "Update a review",
-    "parameters": [
-      {
-        "name": "reviewId",
-        "in": "path",
-        "required": true,
-        "schema": { "type": "string" }
-      }
-    ],
-    "requestBody": {
-      "required": true,
-      "content": {
-        "application/json": {
-          "schema": {
-            "type": "object",
-            "properties": {
-              "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
-              "comment": { "type": "string" }
-            },
-            "required": ["rating", "comment"]
-          }
-        }
-      }
-    },
-    "responses": {
-      "200": { "description": "Review updated" },
-      "404": { "description": "Review not found" }
-    },
-    "security": [{ "OAuth2": [] }]
+      },
+      "responses": {
+        "201": { "description": "Review created" },
+        "422": { "description": "Validation error" },
+        "404": { "description": "Recipe not found" }
+      },
+      "security": [{ "OAuth2": [] }]
+    }
   },
-  "delete": {
-    "tags": ["Reviews"],
-    "summary": "Delete a review",
-    "parameters": [
-      {
-        "name": "reviewId",
-        "in": "path",
+  "/reviews/{reviewId}": {
+    "put": {
+      "tags": ["Reviews"],
+      "summary": "Update a review",
+      "parameters": [
+        {
+          "name": "reviewId",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "string" }
+        }
+      ],
+      "requestBody": {
         "required": true,
-        "schema": { "type": "string" }
-      }
-    ],
-    "responses": {
-      "200": { "description": "Review deleted" },
-      "404": { "description": "Review not found" }
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
+                "comment": { "type": "string" }
+              },
+              "required": ["rating", "comment"]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": { "description": "Review updated" },
+        "404": { "description": "Review not found" }
+      },
+      "security": [{ "OAuth2": [] }]
     },
-    "security": [{ "OAuth2": [] }]
+    "delete": {
+      "tags": ["Reviews"],
+      "summary": "Delete a review",
+      "parameters": [
+        {
+          "name": "reviewId",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "string" }
+        }
+      ],
+      "responses": {
+        "200": { "description": "Review deleted" },
+        "404": { "description": "Review not found" }
+      },
+      "security": [{ "OAuth2": [] }]
+    }
   }
-}
 },
   "components": {
     "securitySchemes": {

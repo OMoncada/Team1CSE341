@@ -81,11 +81,10 @@ app.get('/', (req, res) => {
 swagger(app);
 
 // 👉 Rutas API
-app.use('/recipes', require('./routes/recipe'));       // rutas de recetas
-app.use('/recipes', require('./routes/review'));       // solo para GET/POST de reviews
-app.use('/reviews', require('./routes/review'));       // solo para PUT/DELETE de reviews
-app.use('/users', require('./routes/user'));
-app.use('/categories', require('./routes/category'));
+app.use('/recipes', require('./routes/recipe'));       // ✅ rutas de recetas
+app.use('/reviews', require('./routes/review'));       // ✅ rutas de reviews (todas)
+app.use('/users', require('./routes/user'));           // ✅ usuarios
+app.use('/categories', require('./routes/category'));  // ✅ categorías
 
 
 // 👉 Manejo de rutas no encontradas

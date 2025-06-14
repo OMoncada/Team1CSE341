@@ -3,19 +3,19 @@ const router = express.Router();
 const reviewController = require('../controllers/reviews');
 const isAuthenticated = require('../middleware/isAuthenticated');
 
-// Obtener todas las reseñas
+// ✅ GET todas las reviews
 router.get('/', reviewController.getAllReviews);
 
-// Obtener reseñas por receta
+// ✅ GET reviews por receta
 router.get('/recipe/:recipeId', reviewController.getReviewsByRecipe);
 
-// Crear una reseña para una receta (protegida)
+// ✅ POST review por receta (protegido)
 router.post('/recipe/:recipeId', isAuthenticated, reviewController.addReview);
 
-// Actualizar reseña (protegida)
+// ✅ PUT actualizar review (protegido)
 router.put('/:reviewId', isAuthenticated, reviewController.updateReview);
 
-// Eliminar reseña (protegida)
+// ✅ DELETE eliminar review (protegido)
 router.delete('/:reviewId', isAuthenticated, reviewController.deleteReview);
 
 module.exports = router;
