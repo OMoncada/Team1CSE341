@@ -1,22 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const reviewController = require('../controllers/reviews');
-const { validateReview } = require('../validators/reviewValidator');
 const isAuthenticated = require('../middleware/isAuthenticated');
 
-// ✅ Obtener todas las reseñas (no requiere parámetros)
+// Obtener todas las reseñas
 router.get('/', reviewController.getAllReviews);
 
-// ✅ Obtener reseñas por receta específica
-router.get('/recipe/:recipeId/reviews', reviewController.getReviewsByRecipe);
+// Obtener reseñas por receta
+router.get('/recipe/:recipeId', reviewController.getReviewsByRecipe);
 
-// ✅ Crear una nueva reseña para una receta (requiere autenticación)
-router.post('/recipe/:recipeId/reviews', isAuthenticated, validateReview, reviewController.addReview);
+// Crear una reseña para una receta (protegida)
+router.post('/recipe/:recipeId', isAuthenticated, reviewController.addReview);
 
-// ✅ Editar una reseña específica
-router.put('/:reviewId', isAuthenticated, validateReview, reviewController.updateReview);
+// Actualizar reseña (protegida)
+router.put('/:reviewId', isAuthenticated, reviewController.updateReview);
 
-// ✅ Eliminar una reseña específica
+// Eliminar reseña (protegida)
 router.delete('/:reviewId', isAuthenticated, reviewController.deleteReview);
 
 module.exports = router;
