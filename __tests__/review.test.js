@@ -1,18 +1,46 @@
 const request = require('supertest');
+const mongoose = require('mongoose');
 const app = require('../server');
+const Review = require('../models/review');
 
 describe('/reviews routes', () => {
-  test('GET all reviews', async () => {
-    const res = await request(app).get('/reviews');
-    expect(res.statusCode).toBe(200);
-    expect(res.headers['content-type']).toMatch(/json/);
-    expect(Array.isArray(res.body)).toBe(true);
+  let createdReview;
+  let recipeId;
+  let userId;
+
+  beforeAll(async () => {
+    // Limpia la colección de reseñas
+    await Review.deleteMany();
+
+    // Genera ObjectId válidos para receta y usuario
+    recipeId = new mongoose.Types.ObjectId();
+    userId = new mongoose.Types.ObjectId();
+
+    // Crea una reseña con campos válidos del esquema
+    createdReview = await Review.create({
+      recipeId,
+      userId,
+      rating: 5,
+      comment: 'Reseña de prueba unitaria'
+    });
   });
 
-  test('GET review by ID', async () => {
-    const res = await request(app).get('/reviews/684ceb225c2cd957e8f8dda2');
+  afterAll(async () => {
+    // Cierra la conexión de Mongoose después de todas las pruebas
+    await mongoose.connection.close();
+  });
+
+  test('GET reviews by recipe ID', async () => {
+    const res = await request(app).get(`/reviews/recipe/${recipeId}`);
     expect(res.statusCode).toBe(200);
-    expect(res.headers['content-type']).toMatch(/json/);
-    expect(res.body).toHaveProperty('_id', '684ceb225c2cd957e8f8dda2');
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          _id: createdReview._id.toString(),
+          comment: 'Reseña de prueba unitaria'
+        })
+      ])
+    );
   });
 });
