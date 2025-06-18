@@ -1,7 +1,7 @@
 ################## 📒 RECIPES ROUTES #######################
 
 #### Get all recipes
-GET http://localhost:3000/recipes
+GET https://team1cse341.onrender.com/recipes
 
 #### Get one recipe by ID
 GET http://localhost:3000/recipes/
@@ -39,7 +39,7 @@ Content-Type: application/json
 }
 
 #### Delete recipe by ID
-DELETE http://localhost:3000/recipes/684279c49c6dc96c07e90fd6
+DELETE http://localhost:3000/recipes/6847bc70174de04e52cb3864
 
 ################## 👤 USERS ROUTES ###########################
 
